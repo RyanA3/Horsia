@@ -1,0 +1,20 @@
+#HHHHHHHHHHHHHHHHHHHHHHHHHHH
+#   EQUESTRIAN EXPANSION   H
+#   Plugin by Felnstaren   H
+#HHHHHHHHHHHHHHHHHHHHHHHHHHH
+
+
+# What messages do you want to see from this plugin? 
+# DEBUG -> INFO -> WARN -> SEVERE
+# You will see all messages above the priority you select as well
+logger-priority: INFO
+
+
+#How long (in seconds) it takes for a horse to appear when called
+call-time: 10
+
+#How long (in seconds) until summoned horses should despawn since they were last ridden by their owner
+despawn-time: 30
+
+#How many horses should one player be allowed to have? Set to -1 for infinite
+max-horses: 3

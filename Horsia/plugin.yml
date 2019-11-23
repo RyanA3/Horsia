@@ -1,0 +1,17 @@
+name: Horsia
+main: me.feln.horsia.Horsia
+version: 0.1a
+author: Felnstaren
+description: Faster horses!
+api-version: 1.14
+
+commands:
+ call:
+  aliases: []
+  description: Call your horse
+ reloadhorseconfig:
+  aliases: [rlhconfig]
+  description: Reload the horses config file
+ horses:
+  aliases: [stable]
+  description: See all your horses
