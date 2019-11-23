@@ -105,6 +105,8 @@ public class DataHorse {
 		horse.setColor(color);
 		horse.getInventory().setArmor(new ItemStack(armor));
 		horse.getInventory().setSaddle(new ItemStack(saddle));
+		horse.setAdult();
+		horse.setTamed(true);
 		
 		return horse;
 	}

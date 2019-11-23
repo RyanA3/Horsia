@@ -9,15 +9,17 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import me.feln.horsia.config.DataHorse;
 import me.feln.horsia.config.DataPlayer;
+import me.feln.horsia.util.item.ItemEditor;
 import me.feln.horsia.util.logger.Level;
 import me.feln.horsia.util.logger.Logger;
+import me.feln.horsia.util.ui.event.MenuButtonClickEvent;
 
 public class Test implements Listener {
 
 	@EventHandler
 	public void onHorseClick(PlayerInteractEntityEvent event) {
-		Logger.log(Level.DEBUG, "Right clicked horse");
 		if(event.getRightClicked().getType() != EntityType.HORSE) return;
+		Logger.log(Level.DEBUG, "Right clicked horse");
 		
 		Player p = event.getPlayer();
 		Horse h = (Horse) event.getRightClicked();
@@ -30,6 +32,13 @@ public class Test implements Listener {
 		dp.saveHorses();
 		
 		Logger.log(Level.DEBUG, "Created horse and stuff");
+	}
+	
+	
+	
+	@EventHandler
+	public void onMenuButton(MenuButtonClickEvent event) {
+		Logger.log(Level.DEBUG, event.getMenu().getPlayer().getName() + " clicked button " + ItemEditor.getName(event.getClicked()));
 	}
 	
 }

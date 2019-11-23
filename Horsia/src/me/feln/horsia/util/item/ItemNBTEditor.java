@@ -14,7 +14,7 @@ import me.feln.horsia.config.Loader;
 public class ItemNBTEditor {
 	
 	public static final int TAG_LIMIT = 20;
-	public static String key = "Horses";
+	public static String key = "Horsia";
 	
 	
 	//Edit NBT Tags by value

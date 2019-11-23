@@ -12,6 +12,6 @@ commands:
  reloadhorseconfig:
   aliases: [rlhconfig]
   description: Reload the horses config file
- horses:
-  aliases: [stable]
+ stable:
+  aliases: [horses]
   description: See all your horses
