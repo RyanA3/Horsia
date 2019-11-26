@@ -13,6 +13,7 @@ import org.bukkit.entity.Horse.Color;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.inventory.ItemStack;
 
+import me.feln.horsia.util.Messenger;
 import me.feln.horsia.util.MyMath;
 import me.feln.horsia.util.logger.Level;
 import me.feln.horsia.util.logger.Logger;
@@ -84,10 +85,15 @@ public class DataHorse {
 	public static double reverseID(double idin, double jvalue) {
 		//double add = MyMath.roundDown(jvalue, 3);
 		//double base = MyMath.roundDown(idin, id_accuracy);
-		BigDecimal precisebase = new BigDecimal(idin);
-		precisebase = precisebase.movePointLeft(id_accuracy);
-		BigDecimal precisejvalue = new BigDecimal(jvalue);
-		precisebase = precisebase.add(precisejvalue);
+		Logger.log(Level.DEBUG, "Reversing id; " + idin + " into jump value; " + jvalue);
+		BigDecimal precisebase = BigDecimal.valueOf(jvalue);
+		precisebase.setScale(id_accuracy + 3);
+		BigDecimal preciseid = BigDecimal.valueOf(idin);
+		preciseid = preciseid.divide(new BigDecimal(Math.pow(10, id_accuracy)));
+		Logger.log(Level.DEBUG, "Shifted int id value to double; " + preciseid.toString());
+		Logger.log(Level.DEBUG, precisebase.doubleValue() + " + " + preciseid.doubleValue());
+		precisebase = precisebase.add(preciseid);
+		Logger.log(Level.DEBUG, " = " + precisebase.doubleValue());
 		return precisebase.doubleValue();
 	}
 	
@@ -107,6 +113,8 @@ public class DataHorse {
 		horse.getInventory().setSaddle(new ItemStack(saddle));
 		horse.setAdult();
 		horse.setTamed(true);
+		
+		Logger.log(Level.DEBUG, "Summoned horse with id containing jump value; " + horse.getJumpStrength());
 		
 		return horse;
 	}
@@ -204,6 +212,18 @@ public class DataHorse {
 	
 	public Material getSaddle() {
 		return this.saddle;
+	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return
+				Messenger.color(
+						"&7Speed[" + speed + "]/n/" +
+						"&7Jump[" + jump + "]/n/" +
+						"&7Health[" + health + "/" + max_health + "]/n/"
+						);
 	}
 	
 }

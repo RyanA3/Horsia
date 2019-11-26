@@ -23,12 +23,10 @@ public class MenuEventTrigger implements Listener {
 		if(!(event.getClickedInventory().getHolder() instanceof Player)) return;
 		if(!event.getClickedInventory().equals(event.getView().getTopInventory())) return;
 		
-		
-
-		
 		ItemStack clicked = event.getCurrentItem();
-		if(ItemNBTEditor.hasTag(clicked, "button")) Bukkit.getPluginManager().callEvent(new MenuButtonClickEvent(new Menu(event.getClickedInventory()), clicked));
-		else Bukkit.getPluginManager().callEvent(new MenuClickEvent(new Menu(event.getClickedInventory()), clicked));
+		Menu menu = new Menu(event.getClickedInventory());
+		if(ItemNBTEditor.hasTag(clicked, "button")) Bukkit.getPluginManager().callEvent(new MenuButtonClickEvent(menu, clicked));
+		else Bukkit.getPluginManager().callEvent(new MenuClickEvent(menu, clicked));
 	}
 	
 }

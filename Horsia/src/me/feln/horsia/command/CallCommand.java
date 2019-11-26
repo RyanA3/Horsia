@@ -7,9 +7,20 @@ import org.bukkit.entity.Player;
 
 import me.feln.horsia.config.DataHorse;
 import me.feln.horsia.config.DataPlayer;
+import me.feln.horsia.config.Options;
+import me.feln.horsia.func.horse.HorseCaller;
+import me.feln.horsia.func.horse.WorldHorseChecker;
 import me.feln.horsia.util.Messenger;
 
 public class CallCommand implements CommandExecutor {
+	
+	private HorseCaller caller;
+	
+	public CallCommand(HorseCaller caller) {
+		this.caller = caller;
+	}
+	
+	
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(!sender.hasPermission("horsia.call")) {
@@ -23,6 +34,7 @@ public class CallCommand implements CommandExecutor {
 		}
 		
 		DataPlayer player = new DataPlayer(sender.getName());
+		Player p = (Player) sender;
 		
 		if(player.getHorseCount() <= 0) {
 			sender.sendMessage(Messenger.color("&cYou don't have any horses!"));
@@ -36,14 +48,20 @@ public class CallCommand implements CommandExecutor {
 		else sender.sendMessage(Messenger.color("&7" + args[0] + " &cis not one of your horses!"));
 		if(horse == null) return true;
 		
+		if(caller.isCalled(horse)) {
+			sender.sendMessage(Messenger.color("&cThis horse is already on it's way!"));
+			return true;
+		}
+		
+		if(WorldHorseChecker.horseEntityExists(horse)) {
+			sender.sendMessage(Messenger.color("&cThis horse is not in the stable, and cannot be called!"));
+			return true;
+		}
+		
 		sender.sendMessage(Messenger.color("&aYou've called your horse! &7(" + horse.getName() + "&7)"));
 		
-		
-		
-		horse.summon(((Player) sender).getLocation());
-		
-		
-		
+		caller.callHorse(horse, p.getLocation(), Options.call_time);
+
 		return true;
 	}
 	

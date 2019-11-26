@@ -16,5 +16,6 @@ call-time: 10
 #How long (in seconds) until summoned horses should despawn since they were last ridden by their owner
 despawn-time: 30
 
-#How many horses should one player be allowed to have? Set to -1 for infinite
+#How many horses should one player be allowed to have? 
+#DO NOT SET TO A VALUE ABOVE 9
 max-horses: 3

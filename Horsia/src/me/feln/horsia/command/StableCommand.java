@@ -1,13 +1,12 @@
 package me.feln.horsia.command;
 
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.feln.horsia.util.Messenger;
-import me.feln.horsia.util.ui.menu.Menu;
+import me.feln.horsia.util.ui.menu.StableMenu;
 
 public class StableCommand implements CommandExecutor {
 
@@ -23,8 +22,7 @@ public class StableCommand implements CommandExecutor {
 		}
 		
 		Player player = (Player) sender;
-		Menu stable = new Menu(player, "&6Stable", 27);
-		stable.setButton(Material.IRON_HORSE_ARMOR, "Horse", "Insert /n/ stats /n/ here", 14);
+		StableMenu stable = new StableMenu(player);
 		stable.open();
 		
 		return true;

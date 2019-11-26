@@ -82,6 +82,9 @@ public class DataPlayer {
 		List<DataHorse> remove = new ArrayList<DataHorse>();
 		for(DataHorse h : horses) if(h.matches(horse)) remove.add(h);
 		horses.removeAll(remove);
+		
+		data.set("horse." + horse.getName(), null);
+		save();
 	}
 	
 	@Deprecated
@@ -110,6 +113,12 @@ public class DataPlayer {
 		if(horses.isEmpty()) return null;
 		for(DataHorse check : horses) if(check.getName().equals(name)) return check;
 		return null;
+	}
+	
+	public DataHorse getHorse(int index) {
+		if(horses.isEmpty()) return null;
+		if(horses.size() < index + 1) return null;
+		return horses.get(index);
 	}
 	
 	public List<DataHorse> getHorses() {

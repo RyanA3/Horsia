@@ -12,17 +12,21 @@ import me.feln.horsia.util.item.ItemNBTEditor;
 
 public class Menu {
 
-	private Inventory inventory;
-	private Player player;
+	protected Inventory inventory;
+	protected String name;
+	protected Player player;
 	
-	public Menu(Player player, String name, int size) {
+	public Menu(Player player, String id, int size) {
 		this.player = player;
-		this.inventory = Bukkit.createInventory(player, size, Messenger.color("&8✯" + name));
+		this.name = id;
+		this.inventory = Bukkit.createInventory(player, size, Messenger.color("&8✯" + id));
+		
 	}
 	
 	public Menu(Inventory inventory) {
 		this.inventory = inventory;
 		this.player = (Player) inventory.getHolder();
+		this.name = Messenger.uncolor(player.getOpenInventory().getTitle().replace("✯", ""));
 	}
 	
 	
@@ -30,14 +34,12 @@ public class Menu {
 	
 	public void setButton(ItemStack item, int slot) {
 		ItemNBTEditor.addTag(item, "button");
-		inventory.setItem(slot, item);
-		player.updateInventory();
+		setElement(item, slot);
 	}
 	
 	public void setButton(Material mat, String name, int slot) {
 		ItemStack item = new ItemStack(mat);
 		ItemEditor.setName(item, Messenger.color(name));
-		ItemNBTEditor.addTag(item, "button");
 		setButton(item, slot);
 	}
 	
@@ -45,15 +47,52 @@ public class Menu {
 		ItemStack item = new ItemStack(mat);
 		ItemEditor.setName(item, Messenger.color(name));
 		ItemEditor.setLore(item, Messenger.color(lore));
-		ItemNBTEditor.addTag(item, "button");
 		setButton(item, slot);
 	}
 	
-	public void fill(Material mat) {
+	public void setButton(Material mat, String name, String lore, String button_id, int slot) {
 		ItemStack item = new ItemStack(mat);
-		ItemEditor.setName(item, "");
+		ItemEditor.setName(item, Messenger.color(name));
+		ItemEditor.setLore(item, Messenger.color(lore));
+		ItemNBTEditor.addTag(item, button_id);
+		setButton(item, slot);
+	}
+	
+	public void setElement(ItemStack item, int slot) {
 		ItemNBTEditor.addTag(item, "element");
-		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) inventory.setItem(i, item);
+		inventory.setItem(slot, item);
+		player.updateInventory();
+		
+	}
+	
+	public void setElement(Material mat, String name, int slot) {
+		ItemStack item = new ItemStack(mat);
+		ItemEditor.setName(item, Messenger.color(name));
+		setElement(item, slot);
+	}
+	
+	public void setElement(Material mat, String name, String lore, int slot) {
+		ItemStack item = new ItemStack(mat);
+		ItemEditor.setName(item, Messenger.color(name));
+		ItemEditor.setLore(item, Messenger.color(lore));
+		setElement(item, slot);
+	}
+	
+	public void setElement(Material mat, String name, String lore, String element_id, int slot) {
+		ItemStack item = new ItemStack(mat);
+		ItemEditor.setName(item, Messenger.color(name));
+		ItemEditor.setLore(item, Messenger.color(lore));
+		ItemNBTEditor.addTag(item, element_id);
+		setElement(item, slot);
+	}
+	
+	public void fill(Material mat) {
+		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) setElement(mat, " ", i);
+		player.updateInventory();
+	}
+	
+	public void fill(Material mat, String name, String lore) {
+		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) setElement(mat, name, lore, i);
 		player.updateInventory();
 	}
 	
@@ -62,6 +101,7 @@ public class Menu {
 	
 	
 	public void open() {
+		player.closeInventory();
 		player.openInventory(inventory);
 	}
 	
@@ -79,6 +119,10 @@ public class Menu {
 	
 	public Inventory getInventory() {
 		return this.inventory;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 }
