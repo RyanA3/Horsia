@@ -3,17 +3,18 @@ package me.feln.horsia.func.horse;
 import org.bukkit.Location;
 
 import me.feln.horsia.config.DataHorse;
+import me.feln.horsia.config.DataPlayer;
 
 public class HorseCall {
 	
+	private DataPlayer caller;
 	private DataHorse horse;
 	private Location location;
-	private int wait;
 
-	public HorseCall(DataHorse horse, Location location, int wait) {
+	public HorseCall(DataPlayer caller, DataHorse horse, Location location) {
+		this.caller = caller;
 		this.horse = horse;
 		this.location = location;
-		this.wait = wait;
 	}
 	
 	
@@ -29,17 +30,8 @@ public class HorseCall {
 	
 	
 	
-	public void setWait(int wait) {
-		this.wait = wait;
-	}
-	
-	public void setWait(int wait, boolean auto_complete) {
-		this.wait = wait;
-		if(auto_complete && wait <= 0) complete();
-	}
-	
-	public boolean isComplete() {
-		return wait <= 0;
+	public DataPlayer getCaller() {
+		return this.caller;
 	}
 	
 	public DataHorse getHorse() {
@@ -48,10 +40,6 @@ public class HorseCall {
 	
 	public Location getLocation() {
 		return this.location;
-	}
-	
-	public int getWait() {
-		return this.wait;
 	}
 	
 }

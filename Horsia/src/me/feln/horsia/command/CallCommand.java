@@ -8,16 +8,16 @@ import org.bukkit.entity.Player;
 import me.feln.horsia.config.DataHorse;
 import me.feln.horsia.config.DataPlayer;
 import me.feln.horsia.config.Options;
-import me.feln.horsia.func.horse.HorseCaller;
+import me.feln.horsia.func.horse.HorseManager;
 import me.feln.horsia.func.horse.WorldHorseChecker;
 import me.feln.horsia.util.Messenger;
 
 public class CallCommand implements CommandExecutor {
 	
-	private HorseCaller caller;
+	private HorseManager hman;
 	
-	public CallCommand(HorseCaller caller) {
-		this.caller = caller;
+	public CallCommand(HorseManager hman) {
+		this.hman = hman;
 	}
 	
 	
@@ -48,7 +48,7 @@ public class CallCommand implements CommandExecutor {
 		else sender.sendMessage(Messenger.color("&7" + args[0] + " &cis not one of your horses!"));
 		if(horse == null) return true;
 		
-		if(caller.isCalled(horse)) {
+		if(hman.isCalled(horse)) {
 			sender.sendMessage(Messenger.color("&cThis horse is already on it's way!"));
 			return true;
 		}
@@ -60,7 +60,7 @@ public class CallCommand implements CommandExecutor {
 		
 		sender.sendMessage(Messenger.color("&aYou've called your horse! &7(" + horse.getName() + "&7)"));
 		
-		caller.callHorse(horse, p.getLocation(), Options.call_time);
+		hman.call(player, horse, p.getLocation(), Options.call_time);
 
 		return true;
 	}

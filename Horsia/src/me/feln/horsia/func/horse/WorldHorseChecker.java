@@ -13,9 +13,9 @@ public class WorldHorseChecker {
 	public static boolean horseEntityExists(DataHorse horse) {
 		for(World world : Loader.plugin.getServer().getWorlds()) 
 			for(Horse c : world.getEntitiesByClass(Horse.class)) {
-				DataHorse check = new DataHorse(c);
-				Logger.log(Level.DEBUG, "Checking entity horse id (" + check.getID() + ") against data horse id (" + horse.getID() + ")");
-				if(check.getID() == horse.getID()) return true;
+				int checkid = DataHorse.calcID(c.getJumpStrength());
+				Logger.log(Level.DEBUG, "Checking entity horse id (" + checkid + ") against data horse id (" + horse.getID() + ")");
+				if(checkid == horse.getID()) return true;
 			}
 		return false;
 	}
@@ -23,9 +23,9 @@ public class WorldHorseChecker {
 	public static Horse getHorseEntity(DataHorse horse) {
 		for(World world : Loader.plugin.getServer().getWorlds()) 
 			for(Horse c : world.getEntitiesByClass(Horse.class)) {
-				DataHorse check = new DataHorse(c);
-				Logger.log(Level.DEBUG, "Checking entity horse id (" + check.getID() + ") against data horse id (" + horse.getID() + ")");
-				if(check.getID() == horse.getID()) return c;
+				int checkid = DataHorse.calcID(c.getJumpStrength());
+				Logger.log(Level.DEBUG, "Checking entity horse id (" + checkid + ") against data horse id (" + horse.getID() + ")");
+				if(checkid == horse.getID()) return c;
 			}
 		return null;
 	}

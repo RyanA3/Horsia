@@ -89,6 +89,7 @@ public class DataHorse {
 		BigDecimal precisebase = BigDecimal.valueOf(jvalue);
 		precisebase.setScale(id_accuracy + 3);
 		BigDecimal preciseid = BigDecimal.valueOf(idin);
+		preciseid = preciseid.add(new BigDecimal(2));  //Weird accuracy bug, adding 2 fixes it?
 		preciseid = preciseid.divide(new BigDecimal(Math.pow(10, id_accuracy)));
 		Logger.log(Level.DEBUG, "Shifted int id value to double; " + preciseid.toString());
 		Logger.log(Level.DEBUG, precisebase.doubleValue() + " + " + preciseid.doubleValue());
