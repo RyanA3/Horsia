@@ -1,7 +1,5 @@
 package me.felnstaren.horsia.config;
 
-import java.math.BigDecimal;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,8 +20,6 @@ import me.felnstaren.horsia.util.logger.Logger;
 
 public class DataHorse {
 	
-	private static int id_accuracy = 8;
-
 	private String name;
 	private String owner;
 	private ConfigurationSection data = null;
@@ -33,7 +29,7 @@ public class DataHorse {
 	private Style style;
 	private Color color;
 	
-	private Material armor, saddle;
+	private ItemStack armor_item, saddle_item;
 	
 	
 	
@@ -60,8 +56,10 @@ public class DataHorse {
 		this.style = Style.valueOf(data.getString("style"));
 		this.color = Color.valueOf(data.getString("color"));
 		
-		this.armor = Material.valueOf(data.getString("armor", "AIR"));
-		this.saddle = Material.valueOf(data.getString("saddle", "AIR"));
+		this.armor_item = data.getItemStack("armor_item");
+		this.saddle_item = data.getItemStack("saddle_item");
+		//this.armor = Material.valueOf(data.getString("armor", "AIR"));
+		//this.saddle = Material.valueOf(data.getString("saddle", "AIR"));
 		
 		this.id = data.getInt("id");
 	}
@@ -71,17 +69,17 @@ public class DataHorse {
 		this.data = null;
 		
 		this.max_health = MyMath.round(horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(), 3);
-		this.speed = MyMath.round(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue(), 3);
+		this.speed = MyMath.roundDown(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue(), 3);
 		this.jump = MyMath.roundDown(horse.getJumpStrength(), 3); //Round down to preserve id value
 		this.health = MyMath.round(horse.getHealth(), 3);
 		
 		this.style = horse.getStyle();
 		this.color = horse.getColor();
 		
-		if(horse.getInventory().getArmor() == null) this.armor = Material.AIR;
-		else this.armor = horse.getInventory().getArmor().getType();
-		if(horse.getInventory().getSaddle() == null) this.saddle = Material.AIR;
-		else this.saddle = horse.getInventory().getSaddle().getType();
+		if(horse.getInventory().getArmor() == null) this.armor_item = new ItemStack(Material.AIR);
+		else this.armor_item = horse.getInventory().getArmor();
+		if(horse.getInventory().getSaddle() == null) this.saddle_item = new ItemStack(Material.AIR);
+		else this.saddle_item = horse.getInventory().getSaddle();
 		
 		this.id = IDerator.getID(horse.getJumpStrength());
 
@@ -90,30 +88,7 @@ public class DataHorse {
 	
 	
 	
-	//Calculate a horse's id from its jump strength
-	@Deprecated
-	public static int calcID(double jvalue) {
-		double base = MyMath.roundDown(jvalue, id_accuracy);
-		double remove = MyMath.roundDown(base, 3);
-		return (int) ((base - remove) * Math.pow(10, id_accuracy));
-	}
-	
-	@Deprecated
-	public static double reverseID(double idin, double jvalue) {
-		//double add = MyMath.roundDown(jvalue, 3);
-		//double base = MyMath.roundDown(idin, id_accuracy);
-		Logger.log(Level.DEBUG, "Reversing id; " + idin + " into jump value; " + jvalue);
-		BigDecimal precisebase = BigDecimal.valueOf(jvalue);
-		precisebase.setScale(id_accuracy + 3);
-		BigDecimal preciseid = BigDecimal.valueOf(idin);
-		//preciseid = preciseid.add(new BigDecimal(2));  //Weird accuracy bug, adding 2 fixes it?
-		preciseid = preciseid.divide(new BigDecimal(Math.pow(10, id_accuracy)));
-		Logger.log(Level.DEBUG, "Shifted int id value to double; " + preciseid.toString());
-		Logger.log(Level.DEBUG, precisebase.doubleValue() + " + " + preciseid.doubleValue());
-		precisebase = precisebase.add(preciseid);
-		Logger.log(Level.DEBUG, " = " + precisebase.doubleValue());
-		return precisebase.doubleValue();
-	}
+
 	
 	
 	
@@ -127,8 +102,8 @@ public class DataHorse {
 		horse.setHealth(health);
 		horse.setStyle(style);
 		horse.setColor(color);
-		horse.getInventory().setArmor(new ItemStack(armor));
-		horse.getInventory().setSaddle(new ItemStack(saddle));
+		horse.getInventory().setArmor(armor_item);
+		horse.getInventory().setSaddle(saddle_item);
 		horse.setAdult();
 		horse.setTamed(true);
 		
@@ -146,7 +121,7 @@ public class DataHorse {
 				name.equals(horse.getCustomName()) &&
 				style.equals(horse.getStyle()) &&
 				color.equals(horse.getColor()) &&
-				id == calcID(horse.getJumpStrength());
+				id == IDerator.getID(horse.getJumpStrength());
 	}
 	
 	public boolean matches(DataHorse horse) {
@@ -171,8 +146,8 @@ public class DataHorse {
 		data.set("jump", jump);
 		data.set("health", health);
 		data.set("max_health", max_health);
-		data.set("armor", armor.name());
-		data.set("saddle", saddle.name());
+		data.set("armor_item", armor_item);
+		data.set("saddle_item", saddle_item);
 		data.set("style", style.toString());
 		data.set("color", color.toString());
 		data.set("id", id);
@@ -226,12 +201,22 @@ public class DataHorse {
 		return this.color;
 	}
 	
-	public Material getArmor() {
-		return this.armor;
+	public ItemStack getArmor() {
+		return this.armor_item;
 	}
 	
-	public Material getSaddle() {
-		return this.saddle;
+	public ItemStack getSaddle() {
+		return this.saddle_item;
+	}
+	
+	public boolean hasArmor() {
+		if(armor_item == null) return false;
+		return armor_item.getType() != Material.AIR;
+	}
+	
+	public boolean hasSaddle() {
+		if(saddle_item == null) return false;
+		return saddle_item.getType() != Material.AIR;
 	}
 	
 	public boolean isOwnedBy(String name) {

@@ -37,26 +37,37 @@ public class Menu {
 		setElement(item, slot);
 	}
 	
-	public void setButton(Material mat, String name, int slot) {
-		ItemStack item = new ItemStack(mat);
+	public void setButton(ItemStack item, String name, int slot) {
 		ItemEditor.setName(item, Messenger.color(name));
 		setButton(item, slot);
 	}
 	
-	public void setButton(Material mat, String name, String lore, int slot) {
-		ItemStack item = new ItemStack(mat);
+	public void setButton(Material material, String name, int slot) {
+		setButton(new ItemStack(material), name, slot);
+	}
+	
+	public void setButton(ItemStack item, String name, String lore, int slot) {
 		ItemEditor.setName(item, Messenger.color(name));
 		ItemEditor.setLore(item, Messenger.color(lore));
 		setButton(item, slot);
 	}
 	
-	public void setButton(Material mat, String name, String lore, String button_id, int slot) {
-		ItemStack item = new ItemStack(mat);
+	public void setButton(Material material, String name, String lore, int slot) {
+		setButton(new ItemStack(material), name, lore, slot);
+	}
+	
+	public void setButton(ItemStack item, String name, String lore, String button_id, int slot) {
 		ItemEditor.setName(item, Messenger.color(name));
 		ItemEditor.setLore(item, Messenger.color(lore));
 		ItemNBTEditor.addTag(item, button_id);
 		setButton(item, slot);
 	}
+	
+	public void setButton(Material material, String name, String lore, String button_id, int slot) {
+		setButton(new ItemStack(material), name, lore, button_id, slot);
+	}
+	
+	
 	
 	public void setElement(ItemStack item, int slot) {
 		ItemNBTEditor.addTag(item, "element");
@@ -65,35 +76,54 @@ public class Menu {
 		
 	}
 	
-	public void setElement(Material mat, String name, int slot) {
-		ItemStack item = new ItemStack(mat);
+	public void setElement(ItemStack item, String name, int slot) {
 		ItemEditor.setName(item, Messenger.color(name));
 		setElement(item, slot);
 	}
 	
-	public void setElement(Material mat, String name, String lore, int slot) {
-		ItemStack item = new ItemStack(mat);
+	public void setElement(Material material, String name, int slot) {
+		setElement(new ItemStack(material), name, slot);
+	}
+	
+	public void setElement(ItemStack item, String name, String lore, int slot) {
 		ItemEditor.setName(item, Messenger.color(name));
 		ItemEditor.setLore(item, Messenger.color(lore));
 		setElement(item, slot);
 	}
 	
-	public void setElement(Material mat, String name, String lore, String element_id, int slot) {
-		ItemStack item = new ItemStack(mat);
+	public void setElement(Material material, String name, String lore, int slot) {
+		setElement(new ItemStack(material), name, lore, slot);
+	}
+	
+	public void setElement(ItemStack item, String name, String lore, String element_id, int slot) {
 		ItemEditor.setName(item, Messenger.color(name));
 		ItemEditor.setLore(item, Messenger.color(lore));
 		ItemNBTEditor.addTag(item, element_id);
 		setElement(item, slot);
 	}
 	
-	public void fill(Material mat) {
-		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) setElement(mat, " ", i);
+	public void setElement(Material material, String name, String lore, String element_id, int slot) {
+		setElement(new ItemStack(material), name, lore, element_id, slot);
+	}
+	
+	
+	
+	public void fill(ItemStack item) {
+		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) setElement(item, " ", i);
 		player.updateInventory();
 	}
 	
-	public void fill(Material mat, String name, String lore) {
-		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) setElement(mat, name, lore, i);
+	public void fill(Material material) {
+		fill(new ItemStack(material));
+	}
+	
+	public void fill(ItemStack item, String name, String lore) {
+		for(int i = 0; i < inventory.getSize(); i++) if(inventory.getItem(i) == null) setElement(item, name, lore, i);
 		player.updateInventory();
+	}
+	
+	public void fill(Material material, String name, String lore) {
+		fill(new ItemStack(material), name, lore);
 	}
 	
 	
