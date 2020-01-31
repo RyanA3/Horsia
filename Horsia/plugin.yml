@@ -1,5 +1,5 @@
 name: Horsia
-main: me.feln.horsia.Horsia
+main: me.felnstaren.horsia.Horsia
 version: 0.1a
 author: Felnstaren
 description: Faster horses!
@@ -15,3 +15,6 @@ commands:
  stable:
   aliases: [horses]
   description: See all your horses
+ claimhorse:
+  aliases: [ch]
+  description: Add the horse you're riding to your stable
