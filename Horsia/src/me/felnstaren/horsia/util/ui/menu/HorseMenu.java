@@ -13,7 +13,10 @@ public class HorseMenu extends Menu {
 		setButton(Material.COMPASS, "&aCall Horse", "", "call_horse", 10);
 		setButton(Material.ARROW, "&cBack", "", "open_stable", 26);
 		setButton(Material.BARRIER, "&4Release Horse", "&cThis cannot be undone!", "release_horse", 16);
-		setButton(Material.NAME_TAG, "&b&l" + horse.getName(), "&7Click to rename this horse", "rename_horse", 12);
+		
+		setButton(Material.GOLDEN_APPLE, "&eRevive", "", "feed_golden_apple", 12);
+		setButton(Material.HAY_BLOCK, "&eFeed", "", "feed_hay_bale", 13);
+		setButton(Material.WHEAT, "&eFeed", "", "feed_hay", 14);
 		
 		setElement(Material.KNOWLEDGE_BOOK, "&b" + horse.getName() + "&7's Stats; ", 18);
 		setElement(Material.FIRE_CORAL_BLOCK, "&7Health", "&8" + horse.getHealth() + "/" + horse.getMaxHealth(), 19);

@@ -12,12 +12,22 @@ import org.bukkit.inventory.ItemStack;
 
 import me.felnstaren.horsia.config.DataHorse;
 import me.felnstaren.horsia.config.DataPlayer;
+import me.felnstaren.horsia.config.Options;
+import me.felnstaren.horsia.function.horse.HorseManager;
 import me.felnstaren.horsia.util.Messenger;
 import me.felnstaren.horsia.util.item.ItemEditor;
 import me.felnstaren.horsia.util.logger.Level;
 import me.felnstaren.horsia.util.logger.Logger;
 
 public class HorseRenameListener implements Listener {
+	
+	private HorseManager horse_manager;
+	
+	public HorseRenameListener(HorseManager horse_manager) {
+		this.horse_manager = horse_manager;
+	}
+	
+	
 
 	@EventHandler
 	public void onRenameAttempt(PlayerInteractEntityEvent event) {
@@ -53,9 +63,11 @@ public class HorseRenameListener implements Listener {
 			event.setCancelled(true);
 		}
 		
+		horse_manager.cancelDespawn(horse);
 		player.renameHorse(horse, rename);
 		player.saveHorses();
 		Logger.log(Level.DEBUG, "Player " + p.getName() + " renamed horse from " + name + " to " + rename + "!");
+		horse_manager.despawn(player, horse, Options.despawn_time);
 	}
 	
 }

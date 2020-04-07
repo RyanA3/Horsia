@@ -19,9 +19,10 @@ public class DataPlayer {
 	
 	
 	public DataPlayer(String name) {
+		Logger.log(Level.DEBUG, "Loading player with name " + name);
+		this.player_name = name;
 		this.path = "playerdata/" + name + ".yml";
 		load(Loader.loadOrDefault(path, "default_player.yml"));
-		this.player_name = name;
 		save();
 	}
 	

@@ -34,6 +34,7 @@ public class DataHorse {
 	
 	
 	public DataHorse(ConfigurationSection data, String owner) {
+		Logger.log(Level.DEBUG, "Loaded horse with owner " + owner);
 		this.owner = owner;
 		update(data);
 	}
@@ -109,7 +110,7 @@ public class DataHorse {
 		
 		if(owner != null) horse.setOwner(Bukkit.getPlayerExact(owner));
 		
-		Logger.log(Level.DEBUG, "Summoned horse; " + horse.getCustomName());
+		Logger.log(Level.DEBUG, "Summoned horse; " + horse.getCustomName() + " Owner: " + owner);
 		
 		return horse;
 	}
@@ -118,7 +119,7 @@ public class DataHorse {
 	
 	public boolean matches(Horse horse) {
 		return 
-				name.equals(horse.getCustomName()) &&
+				//name.equals(horse.getCustomName()) &&
 				style.equals(horse.getStyle()) &&
 				color.equals(horse.getColor()) &&
 				id == IDerator.getID(horse.getJumpStrength());
@@ -128,7 +129,7 @@ public class DataHorse {
 		Logger.log(Level.DEBUG, "Checking horse; " + id + " vs; " + horse.getID());
 		
 		return
-				name.equals(horse.getName()) &&
+				//name.equals(horse.getName()) &&
 				style.equals(horse.getStyle()) &&
 				color.equals(horse.getColor()) &&
 				id == horse.getID();
@@ -230,6 +231,11 @@ public class DataHorse {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void heal(double hp) {
+		this.health += hp;
+		if(health > max_health) health = max_health;
 	}
 	
 	

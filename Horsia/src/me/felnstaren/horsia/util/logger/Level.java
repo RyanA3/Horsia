@@ -26,4 +26,5 @@ public enum Level {
 	public boolean hasPriority(int level) {
 		return this.weight >= level;
 	}
+	
 }

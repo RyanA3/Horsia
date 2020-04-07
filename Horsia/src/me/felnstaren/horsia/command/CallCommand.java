@@ -45,16 +45,21 @@ public class CallCommand implements CommandExecutor {
 		
 		if(args.length == 0) horse = player.getHorses().get(0);
 		else if(player.hasHorse(args[0])) horse = player.getHorse(args[0]);
-		else sender.sendMessage(Messenger.color("&7" + args[0] + " &cis not one of your horses!"));
+		else sender.sendMessage(Messenger.color("&7" + args[0] + " &cis not one of your horses"));
 		if(horse == null) return true;
 		
 		if(hman.isCalled(horse)) {
-			sender.sendMessage(Messenger.color("&cThis horse is already on it's way!"));
+			sender.sendMessage(Messenger.color("&cThis horse is already on it's way"));
 			return true;
 		}
 		
 		if(WorldHorseChecker.horseEntityExists(horse)) {
-			sender.sendMessage(Messenger.color("&cThis horse is not in the stable, and cannot be called!"));
+			sender.sendMessage(Messenger.color("&cThis horse is not in the stable, and cannot be called"));
+			return true;
+		}
+		
+		if(horse.getHealth() <= 0.0) {
+			sender.sendMessage(Messenger.color("&cThis horse is greatly injured and needs time to heal"));
 			return true;
 		}
 		

@@ -36,7 +36,7 @@ public class HorseMountListener implements Listener {
 		
 		DataHorse horse = new DataHorse(h);
 		
-		if(!player.hasHorse(horse)) {
+		if(h.getOwner() != null && !player.hasHorse(horse)) {
 			event.setCancelled(true);
 			p.sendMessage(ChatColor.GRAY + "The horse kicks you off!");
 			return;

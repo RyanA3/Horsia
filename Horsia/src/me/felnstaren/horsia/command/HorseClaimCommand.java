@@ -16,10 +16,10 @@ import net.md_5.bungee.api.ChatColor;
 
 public class HorseClaimCommand implements CommandExecutor {
 	
-	private ChatResponseHandler crhand;
+	private ChatResponseHandler chat_request_manager;
 	
-	public HorseClaimCommand(ChatResponseHandler crhand) {
-		this.crhand = crhand;
+	public HorseClaimCommand(ChatResponseHandler chat_request_manager) {
+		this.chat_request_manager = chat_request_manager;
 	}
 	
 	
@@ -57,7 +57,7 @@ public class HorseClaimCommand implements CommandExecutor {
 		}
 		
 		p.sendMessage(Messenger.color("&aWhat would you like to name your horse..."));
-		crhand.addToRequests(new ChatRequest(p, "claim_horse_rename"));
+		chat_request_manager.addToRequests(new ChatRequest(p, "claim_horse_rename"));
 		
 		return true;
 	}
