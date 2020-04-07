@@ -11,6 +11,7 @@ import me.felnstaren.horsia.command.StableCommand;
 import me.felnstaren.horsia.config.Loader;
 import me.felnstaren.horsia.config.Options;
 import me.felnstaren.horsia.function.horse.HorseManager;
+import me.felnstaren.horsia.function.horse.listeners.HorseDamageListener;
 import me.felnstaren.horsia.function.horse.listeners.HorseDeathListener;
 import me.felnstaren.horsia.function.horse.listeners.HorseDismountListener;
 import me.felnstaren.horsia.function.horse.listeners.HorseMountListener;
@@ -47,6 +48,7 @@ public class Horsia extends JavaPlugin {
 		pm.registerEvents(new ClaimHorseRenameListener(), this);
 		pm.registerEvents(new HorseMenuListener(), this);
 		pm.registerEvents(new HorseDeathListener(horse_manager), this);
+		pm.registerEvents(new HorseDamageListener(horse_manager), this);
 		
 		//Commands
 		this.getCommand("call").setExecutor(new CallCommand(horse_manager));
