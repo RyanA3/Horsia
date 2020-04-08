@@ -19,6 +19,7 @@ public class HorseTameListener implements Listener {
 		CraftPlayer cp = (CraftPlayer) p;
 		
 		if(!(event.getEntity() instanceof Horse)) return;
+		((Horse) event.getEntity()).setOwner(null);
 		
 		p.sendMessage(Messenger.color("&7Would you like to add this horse to your stable?"));
 		String rjson = "[\"\",{\"text\":\"[\",\"color\":\"gray\"},{\"text\":\"" + "Confirm" + "\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/claimhorse\"}},{\"text\":\"]\",\"color\":\"gray\"}]";

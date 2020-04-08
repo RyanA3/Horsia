@@ -20,7 +20,6 @@ public class Menu {
 		this.player = player;
 		this.name = id;
 		this.inventory = Bukkit.createInventory(player, size, Messenger.color("&8✯" + id));
-		
 	}
 	
 	public Menu(Inventory inventory) {

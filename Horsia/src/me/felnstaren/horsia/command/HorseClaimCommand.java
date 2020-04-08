@@ -46,12 +46,12 @@ public class HorseClaimCommand implements CommandExecutor {
 		Horse h = (Horse) mount;
 		DataHorse horse = new DataHorse(h);
 		DataPlayer player = new DataPlayer(p.getName());
-		if(h.getCustomName() != null && !player.hasHorse(horse)) {
+		if(h.getOwner() != null && !h.getOwner().equals(p)) {
 			p.sendMessage(ChatColor.GRAY + "This is not your horse!");
 			return true;
 		}
 		
-		if(h.getCustomName() != null && player.hasHorse(horse)) {
+		if(h.getOwner() != null && h.getOwner().equals(p) && player.hasHorse(horse)) {
 			p.sendMessage(Messenger.color("&cThis horse is already in your stable"));
 			return true;
 		}

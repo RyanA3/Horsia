@@ -46,7 +46,7 @@ public class ClaimHorseRenameListener implements Listener {
 		}
 		
 		DataHorse horse = new DataHorse(h);
-		if(horse.hasOwner() && !horse.isOwnedBy(p.getName())) {
+		if(h.getOwner() != null && !h.getOwner().equals(p)) {
 			p.sendMessage(Messenger.color("&cThis horse already has an owner"));
 			return;
 		}
