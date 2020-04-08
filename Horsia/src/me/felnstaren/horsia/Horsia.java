@@ -25,6 +25,9 @@ import me.felnstaren.horsia.util.ui.chat.ChatResponseHandler;
 import me.felnstaren.horsia.util.ui.menu.MenuEventTrigger;
 
 public class Horsia extends JavaPlugin {
+	
+	private HorseManager horse_manager;
+	private ChatResponseHandler chat_response_manager;
 
 	public void onEnable() {
 		//Config init
@@ -32,8 +35,8 @@ public class Horsia extends JavaPlugin {
 		Options.load(config);
 		
 		//Runnables & Managers
-		HorseManager horse_manager = new HorseManager();
-		ChatResponseHandler chat_response_manager = new ChatResponseHandler();
+		horse_manager = new HorseManager();
+		chat_response_manager = new ChatResponseHandler();
 		
 		//Events
 		PluginManager pm = this.getServer().getPluginManager();
@@ -58,7 +61,7 @@ public class Horsia extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		
+		horse_manager.purge();
 	}
 	
 }

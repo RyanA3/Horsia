@@ -64,6 +64,17 @@ public class HorseManager {
 	
 	
 	
+	public void purge() {
+		despawnHorses();
+		for(HorseDespawn d : despawn.keySet())
+			d.complete();
+		
+		fin_spawn.clear();
+		spawn.clear();
+	}
+	
+	
+	
 	public void despawn(DataPlayer owner, DataHorse horse, Integer wait) {
 		Logger.log(Level.DEBUG, "Despawning horse");
 		HorseDespawn leave = new HorseDespawn(owner, horse);
